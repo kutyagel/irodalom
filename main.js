@@ -44,12 +44,17 @@ for (let i = 1; i < array.length; i++) { // vegigiteralok az arrayen, az elso el
     sor.appendChild(cella2); // cella hozzafuzese a sorhoz
 
     const cella3 = document.createElement('td'); // td elem letrehozasa a harmadik cellahoz
-    cella3.innerHTML = adat.szerelem1; // cella tartalma az aktualis elem szerelem1 tulajdonsaga
-    sor.appendChild(cella3); // cella hozzafuzese a sorhoz
+    cella3.innerHTML = currentElement.szerelem1; // cella tartalma az aktualis elem szerelem1 tulajdonsaga
+    
+    if (currentElement.szerelem2 === undefined){ // ha masodik szerelem nincs akkor egybevonja a ket cellat
+        cella3.colSpan = 2; // a ket cell osszevonasa
+    }
 
-    const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellahoz
-    cella4.innerHTML = adat.szerelem2|| ''; // cella tartalma az aktualis elem szerelem2 tulajdonsaga
-    sor.appendChild(cella4); // cella hozzafuzese a sorhoz
+    if(array.szerelem2 !== undefined){ // kulon cellaba rakja ha van masodik szerelme
+        const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellabam
+        cella4.innerHTML = currentElement.szerelem2; // cella tartalma az aktualis elem szerelem2 tubajdonsaga
+        sor.appendChild(cella4); // cella hozzafuzevese a sorhoz
+    }
 }
 
 const table = document.createElement('table'); // table elem letrehozasa
@@ -71,7 +76,6 @@ fejlecSor.appendChild(fejlecCella2); // cella hozzafuzese a fejlec sorhoz
 
 const fejlecCella3 = document.createElement('th'); // th elem letrehozasa a harmadik fejlec cellahoz
 fejlecCella3.innerHTML = array[0].szerelem; // cella tartalma az elso elem szerelem tulajdonsaga
-fejlecCella3.colSpan = '2'; // 2 oszlopot foglaljon
 fejlecSor.appendChild(fejlecCella3); // cella hozzafuzese a fejlec sorhoz
 
 const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
