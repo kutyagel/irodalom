@@ -28,32 +28,33 @@ const array = [ // tomb letrehozasa
         szerelem2: 'Csinszka'                 // otodik elem szerelem2 tulajdonsaganak erteke
     }
 ];
+function renderMenu() { // fuggveny bevezetese
+    for (let i = 1; i < array.length; i++) { // vegigiteralok az arrayen, az elso elemet kihagyva
+        const currentElement = array[i]; // az aktualis elem elmentese
 
-for (let i = 1; i < array.length; i++) { // vegigiteralok az arrayen, az elso elemet kihagyva
-    const currentElement = array[i]; // az aktualis elem elmentese
+        const sor = document.createElement('tr'); // tr elem letrehozasa az uj sorhoz
+        torzs.appendChild(sor); // sor hozzafuzese a torzshoz
 
-    const sor = document.createElement('tr'); // tr elem letrehozasa az uj sorhoz
-    torzs.appendChild(sor); // sor hozzafuzese a torzshoz
+        const cella1 = document.createElement('td'); // td elem letrehozasa az elso cellahoz
+        cella1.innerHTML = currentElement.szerzo; // cella tartalma az aktualis elem szerzo tulajdonsaga
+        sor.appendChild(cella1); // cella hozzafuzese a sorhoz
 
-    const cella1 = document.createElement('td'); // td elem letrehozasa az elso cellahoz
-    cella1.innerHTML = currentElement.szerzo; // cella tartalma az aktualis elem szerzo tulajdonsaga
-    sor.appendChild(cella1); // cella hozzafuzese a sorhoz
+        const cella2 = document.createElement('td'); // td elem letrehozasa a masodik cellahoz
+        cella2.innerHTML = currentElement.korszak; // cella tartalma az aktualis elem korszak tulajdonsaga
+        sor.appendChild(cella2); // cella hozzafuzese a sorhoz
 
-    const cella2 = document.createElement('td'); // td elem letrehozasa a masodik cellahoz
-    cella2.innerHTML = currentElement.korszak; // cella tartalma az aktualis elem korszak tulajdonsaga
-    sor.appendChild(cella2); // cella hozzafuzese a sorhoz
-
-    const cella3 = document.createElement('td'); // td elem letrehozasa a harmadik cellahoz
-    cella3.innerHTML = currentElement.szerelem1; // cella tartalma az aktualis elem szerelem1 tulajdonsaga
+        const cella3 = document.createElement('td'); // td elem letrehozasa a harmadik cellahoz
+        cella3.innerHTML = currentElement.szerelem1; // cella tartalma az aktualis elem szerelem1 tulajdonsaga
     
-    if (currentElement.szerelem2 === undefined){ // ha masodik szerelem nincs akkor egybevonja a ket cellat
-        cella3.colSpan = 2; // a ket cell osszevonasa
-    }
+        if (currentElement.szerelem2 === undefined){ // ha masodik szerelem nincs akkor egybevonja a ket cellat
+            cella3.colSpan = 2; // a ket cell osszevonasa
+        }
 
-    if(array.szerelem2 !== undefined){ // kulon cellaba rakja ha van masodik szerelme
-        const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellabam
-        cella4.innerHTML = currentElement.szerelem2; // cella tartalma az aktualis elem szerelem2 tubajdonsaga
-        sor.appendChild(cella4); // cella hozzafuzevese a sorhoz
+        if(array.szerelem2 !== undefined){ // kulon cellaba rakja ha van masodik szerelme
+            const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellabam
+            cella4.innerHTML = currentElement.szerelem2; // cella tartalma az aktualis elem szerelem2 tubajdonsaga
+            sor.appendChild(cella4); // cella hozzafuzevese a sorhoz
+        }
     }
 }
 
@@ -80,3 +81,5 @@ fejlecSor.appendChild(fejlecCella3); // cella hozzafuzese a fejlec sorhoz
 
 const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
 table.appendChild(torzs); // torzs hozzafuzese a tablazathoz
+
+renderMenu() // fuggveny meghivas
