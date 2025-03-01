@@ -2,7 +2,7 @@ const array = [ // tomb letrehozasa
     { // tomb elso elemenek letrehozasa
         szerzo: "Szerző neve", // elso elem szerzo tulajdonsaganak erteke
         korszak: "Korszak",    // elso elem korszak tulajdonsaganak erteke
-        szerelem: "Szerelmek"       // elso elem szerelem tulajdonsaganak erteke
+        szerelem1: "Szerelmek"       // elso elem szerelem1 tulajdonsaganak erteke
     },
     { // tomb masodik elemenek letrehozasa
         szerzo: 'Balassi Bálint', // masodik elem szerzo tulajdonsaganak erteke
@@ -13,7 +13,7 @@ const array = [ // tomb letrehozasa
     { // tomb harmadik elemenek letrehozasa
         szerzo: 'Csokonai Vitéz Mihály', // harmadik elem szerzo tulajdonsaganak erteke
         korszak: 'felvilágosodás',         // harmadik elem korszak tulajdonsaganak erteke
-        szerelem: 'Vajda Juliána'             // harmadik elem love tulajdonsaganak erteke
+        szerelem1: 'Vajda Juliána'             // harmadik elem love tulajdonsaganak erteke
     },
     { // tomb negyedik elemenek letrehozasa
         szerzo: 'Petőfi Sándor',        // negyedik elem szerzo tulajdonsaganak erteke
@@ -48,12 +48,10 @@ function renderMenu() { // fuggveny bevezetese
     
         if (currentElement.szerelem2 === undefined){ // ha masodik szerelem nincs akkor egybevonja a ket cellat
             cella3.colSpan = 2; // a ket cell osszevonasa
-        }
-
-        if(array.szerelem2 !== undefined){ // kulon cellaba rakja ha van masodik szerelme
-            const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellabam
-            cella4.innerHTML = currentElement.szerelem2; // cella tartalma az aktualis elem szerelem2 tubajdonsaga
-            sor.appendChild(cella4); // cella hozzafuzevese a sorhoz
+        } else { // kulon cellaba rakja ha van masodik szerelme
+            const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellahoz
+            cella4.innerHTML = currentElement.szerelem2; // cella tartalma az aktualis elem szerelem2 tulajdonsaga
+            sor.appendChild(cella4); // cella hozzafuzese a sorhoz
         }
     }
 }
@@ -76,7 +74,7 @@ fejlecCella2.innerHTML = array[0].korszak; // cella tartalma az elso elem korsza
 fejlecSor.appendChild(fejlecCella2); // cella hozzafuzese a fejlec sorhoz
 
 const fejlecCella3 = document.createElement('th'); // th elem letrehozasa a harmadik fejlec cellahoz
-fejlecCella3.innerHTML = array[0].szerelem; // cella tartalma az elso elem szerelem tulajdonsaga
+fejlecCella3.innerHTML = array[0].szerelem1; // cella tartalma az elso elem szerelem1 tulajdonsaga
 fejlecSor.appendChild(fejlecCella3); // cella hozzafuzese a fejlec sorhoz
 
 const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
