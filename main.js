@@ -32,9 +32,7 @@ const array = [ // tomb letrehozasa
 const menuContainer = document.createElement('div'); // div elem letrehozasa ami a tartalmazza a tablazatot
 document.body.appendChild(menuContainer); // hozzafuzes a bodyhoz
 
-function renderMenu() {
-    menuContainer.innerHTML = '';     // torli a regi tartalmat
-
+function renderMenu() { // renderMenu fuggveny definialasa
     const table = document.createElement('table'); // table elem letrehozasa
     menuContainer.appendChild(table); // hozzafuzes a menuContainer-hez
     
@@ -95,6 +93,18 @@ renderMenu(); // kezdeti render
 
 const form = document.getElementById('form'); // form elem lekerese ami a form idval van definialva
 
+function validateField(inputElem, errorId, errorMessage) { // validacios fuggveny definialasa
+    let valid = true; // lokalis valid valtozo igaz ertekre allitasa
+    if (inputElem.value === '') { // ha az input mezo ures
+        const errorElement = document.getElementById(errorId); // hibauzenet elem kivalasztasa id alapjan
+        if (errorElement) { // ha van ilyen hibauzenet elem 
+            errorElement.innerHTML = errorMessage; // hibauzenet beallitasa
+        }
+        valid = false; // valid valtozo hamisra allitasa
+    }
+    return valid; // valid valtozo ertekenek visszaadasa
+}
+
 form.addEventListener('submit', function(e) { // esemenykezeles a formra
     e.preventDefault(); // alapertelmezett esemeny megakadalyozasa
 
@@ -111,38 +121,33 @@ form.addEventListener('submit', function(e) { // esemenykezeles a formra
         errorElement.innerHTML = ''; // az errorElement tartalmat uresre allitja
     }
     
-    let valid = true; // validacios valtozo kezdeti ertekre allitasa
+    let valid = true; // valid valtozo kezdeti ertekenek beallitasa
 
-    const koltoNevValue = koltoNevElem.value; // kolto nev ertekenek kiolvasasa
-    const korszakValue = korszakElem.value; // korszak ertekenek kiolvasasa
-    const szerelem1Value = szerelem1Elem.value; // szerelem1 ertekenek kiolvasasa
-    const szerelem2Value = masodikElem.checked ? szerelem2Elem.value : undefined; // szerelem2 ertekenek kiolvasasa ha be van pipalva
+    if (!validateField(koltoNevElem, 'kolto_nev-error', 'A költő nevének megadása kötelező')) { // kolto_nev validalasa
+        valid = false; // ha nem valid akkor a valid valtozo false
+    }
+    
+    if (!validateField(korszakElem, 'korszak-error', 'A korszak megadása kötelező')) { // korszak validalasa
+        valid = false; // ha nem valid akkor a valid valtozo false
+    }
+    
+    if (!validateField(szerelem1Elem, 'szerelem1-error', 'Az első szerelem megadása kötelező')) { // szerelem1 validalasa
+        valid = false; // ha nem valid akkor a valid valtozo false
+    }
 
-    if (koltoNevValue === '') { // ellenorzes, hogy a kolto neve ures-e
-        const koltoNevError = document.getElementById('kolto_nev-error'); // hibauzenet helyet tartalmazo elem lekerese
-        koltoNevError.innerHTML = 'A költő nevének megadása kötelező'; // hibauzenet beallitasa
-        valid = false; // validacios valtozo hamisra allitasa
-    }
-    
-    if (korszakValue === '') { // ha a korszak beviteli mezoje ures
-        const korszakError = document.getElementById('korszak-error'); // hibauzenet helyet tartalmazo elem lekerese
-        korszakError.innerHTML = 'A korszak megadása kötelező'; // hibauzenet beallitasa
-        valid = false; // validacios valtozo hamisra allitasa
-    }
-    
-    if (szerelem1Value === '') { // ha a szerelem1 beviteli mezoje ures
-        const szerelem1Error = document.getElementById('szerelem1-error'); // hibauzenet helyet tartalmazo elem lekerese
-        szerelem1Error.innerHTML = 'Az első szerelem megadása kötelező'; // hibauzenet beallitasa
-        valid = false; // validacios valtozo hamisra allitasa
-    }
-    
-    if (masodikElem.checked && (!szerelem2Value || szerelem2Value === '')) { // ellenorzes hogy a checkbox be van-e jelolve es a szerelem2 ures-e
-        const szerelem2Error = document.getElementById('szerelem2-error'); // hibauzenet helyet tartalmazo elem lekerese
-        szerelem2Error.innerHTML = 'A második szerelem megadása kötelező, ha be van jelölve'; // hibauzenet beallitasa
-        valid = false; // validacios valtozo hamisra allitasa
+    if (masodikElem.checked) { // ha a masodik szerelem checkbox be van pipalva
+        if (!validateField(szerelem2Elem, 'szerelem2-error', 'A második szerelem megadása kötelező, ha be van jelölve')) { // szerelem2 validalasa
+            valid = false; // ha nem valid akkor a valid valtozo false
+        }
     }
     
     if (valid) { // ha minden mezo helyesen van kitoltve
+
+        const koltoNevValue = koltoNevElem.value; // kolto nev ertekenek kiolvasasa
+        const korszakValue = korszakElem.value; // korszak ertekenek kiolvasasa
+        const szerelem1Value = szerelem1Elem.value; // szerelem1 ertekenek kiolvasasa
+        const szerelem2Value = masodikElem.checked ? szerelem2Elem.value : undefined; // szerelem2 ertekenek kiolvasasa ha be van pipalva
+
         const newElem = { // definialok egy uj elementet
             szerzo: koltoNevValue, // az uj objektum szerzo erteke a koltoNevValue lesz
             korszak: korszakValue, // az uj objektum korszak erteke a korszakValue lesz
@@ -153,6 +158,6 @@ form.addEventListener('submit', function(e) { // esemenykezeles a formra
         array.push(newElem); // uj elem hozzaadasa a tombhoz
         menuContainer.innerHTML = ''; // tablazat tartalmanak torlese 
         renderMenu(); // tablazat ujrarajzolasa
-        thisForm.reset(); // form resetelese
+        thisForm.reset(); // form reset
     }
 });
