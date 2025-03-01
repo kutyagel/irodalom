@@ -33,7 +33,13 @@ const array = [ // tomb letrehozasa
 const menuContainer = document.createElement('div'); // div elem letrehozasa ami a tartalmazza a tablazatot
 document.body.appendChild(menuContainer); // hozzafuzes a bodyhoz
 
-function createForm() { // form letrehozasa fuggveny def
+/**
+ * form letrehozasa es osszeallitasa
+ * letrehozza a formot az osszes elemet
+ * 
+ * @returns {HTMLFormElement} a legeneralt form elem az osszes hozzaadott mezovel
+ */
+function generateForm() { // form letrehozasa fuggveny def
     const form = document.createElement('form'); // form elem letrehozasa
     form.id = 'form'; // form id
     form.action = '#'; // form action
@@ -144,13 +150,26 @@ function createForm() { // form letrehozasa fuggveny def
     return form; // form visszaadasa
 }
 
+/**
+ * a legeneralt form dom-ba illesztese
+ * Letrehozza a formot a generateFormal
+ * beilleszti a menucontainer elem ele
+ * 
+ * @returns {HTMLFormElement}
+ */
 function addFormToDOM() { // form domhoz adas
-    const newForm = createForm(); // uj form
+    const newForm = generateForm(); // uj form
     document.body.insertBefore(newForm, menuContainer); // form beszurasa a menucontainer ele
     
     return newForm; // form visszaadasa
 }
 
+/**
+ * tablazat fejlec generalasa meg formazasa
+ * 
+ * @param {HTMLTableElement} table a tablazat elem
+ * @param {Array} adatok megjelenitheto adatok tombje
+ */
 function renderTableHeader(table, adatok) {
     const fejlec = document.createElement('thead'); // thead letrehozasa a tablazat fejlecehez
     table.appendChild(fejlec); // fejlec hozzafuzese a tablazathoz
@@ -176,6 +195,12 @@ function renderTableHeader(table, adatok) {
     }
 }
 
+/**
+ * tablazat renderelese az adatokkal
+ * tablazat a fejlec es tartalom sorokat letrehozza
+ * 
+ * @param {Array} adatok adatok tombje
+ */
 function renderMenu(adatok) { // renderMenu fuggveny definialasa
     const table = document.createElement('table'); // table elem letrehozasa
     menuContainer.appendChild(table); // hozzafuzes a menuContainer-hez
@@ -219,6 +244,15 @@ renderMenu(array); // kezdeti render atadva az arrayt
 
 const form = addFormToDOM(); // form hozzaadasa a domhoz
 
+/**
+ * validacios fuggveny mezo ellenorzesehez
+ * ures a mezo vagy nem 
+ * 
+ * @param {HTMLInputElement} inputElem valadilanado input mezo
+ * @param {string} errorId hibauzenet div azonosito
+ * @param {string} errorMessage hibauzenet szovege
+ * @returns {boolean} igaz ha van a mezobe hamis ha nem
+ */
 function validateField(inputElem, errorId, errorMessage) { // validacios fuggveny definialasa
     let valid = true; // lokalis valid valtozo igaz ertekre allitasa
     if (inputElem.value === '') { // ha az input mezo ures
@@ -231,7 +265,15 @@ function validateField(inputElem, errorId, errorMessage) { // validacios fuggven
     return valid; // valid valtozo ertekenek visszaadasa
 }
 
-// sikeresen atmasoltam fuggvenybe az osszetett validaciot
+/**
+ * osszetett validacio a szerelmekhez
+ * ha checkbox pipa akk megnezni hogy a mezok ki vannak e toltve
+ * 
+ * @param {HTMLInputElement} szerelem1Elem elso szerelem
+ * @param {HTMLInputElement} szerelem2Elem masodik szerelem
+ * @param {HTMLInputElement} masodikElem checkbox
+ * @returns {boolean} igaz ha van a mezobe hamis ha nem
+ */
 function validateSzerelmek(szerelem1Elem, szerelem2Elem, masodikElem) { // osszetett validacios fuggveny definialasa
     let valid = true; // lokalis valid valtozo igaz ertekre allitasa
     
@@ -248,6 +290,11 @@ function validateSzerelmek(szerelem1Elem, szerelem2Elem, masodikElem) { // ossze
     return valid; // valid valtozo ertekenek visszaadasa
 }
 
+/**
+ * esemenykezelo a submit gombra
+ * 
+ * @param {Event} e submit esemeny obj
+ */
 form.addEventListener('submit', function(e) { // esemenykezeles a formra
     e.preventDefault(); // alapertelmezett esemeny megakadalyozasa
 
