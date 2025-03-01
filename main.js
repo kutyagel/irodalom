@@ -28,7 +28,41 @@ const array = [ // tomb letrehozasa
         szerelem2: 'Csinszka'                 // otodik elem szerelem2 tulajdonsaganak erteke
     }
 ];
-function renderMenu() { // fuggveny bevezetese
+
+const menuContainer = document.createElement('div'); // div elem letrehozasa ami a tartalmazza a tablazatot
+document.body.appendChild(menuContainer); // hozzafuzes a bodyhoz
+
+function renderMenu() {
+    menuContainer.innerHTML = '';     // torli a regi tartalmat
+
+    const table = document.createElement('table'); // table elem letrehozasa
+    menuContainer.appendChild(table); // hozzafuzes a menuContainer-hez
+    
+    // fejlec letrehozasa
+    const fejlec = document.createElement('thead'); // thead letrehozasa a tablazat fejlecehez
+    table.appendChild(fejlec); // fejlec hozzafuzese a tablazathoz
+    
+    const fejlecSor = document.createElement('tr'); // tr elem letrehozasa a fejlec sorahoz
+    fejlec.appendChild(fejlecSor); // sor hozzafuzese a fejlechez
+    
+    const fejlecCella1 = document.createElement('th'); // th elem letrehozasa az elso fejlec cellahoz
+    fejlecCella1.innerHTML = array[0].szerzo; // cella tartalma az elso elem szerzo tulajdonsaga
+    fejlecSor.appendChild(fejlecCella1); // cella hozzafuzese a fejlec sorhoz
+    
+    const fejlecCella2 = document.createElement('th'); // th elem letrehozasa a masodik fejlec cellahoz
+    fejlecCella2.innerHTML = array[0].korszak || "Korszak"; // cella tartalma az elso elem korszak tulajdonsaga
+    fejlecSor.appendChild(fejlecCella2); // cella hozzafuzese a fejlec sorhoz
+    
+    const fejlecCella3 = document.createElement('th'); // th elem letrehozasa a harmadik fejlec cellahoz
+    fejlecCella3.innerHTML = array[0].szerelem1; // cella tartalma az elso elem szerelem1 tulajdonsaga
+    fejlecCella3.colSpan = '2'; // a ket cell osszevonasa
+    fejlecSor.appendChild(fejlecCella3); // cella hozzafuzese a fejlec sorhoz
+    
+    // torzs
+    const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
+    table.appendChild(torzs); // torzs hozzafuzese a tablazathoz
+
+    // sorok
     for (let i = 1; i < array.length; i++) { // vegigiteralok az arrayen, az elso elemet kihagyva
         const currentElement = array[i]; // az aktualis elem elmentese
 
@@ -45,8 +79,9 @@ function renderMenu() { // fuggveny bevezetese
 
         const cella3 = document.createElement('td'); // td elem letrehozasa a harmadik cellahoz
         cella3.innerHTML = currentElement.szerelem1; // cella tartalma az aktualis elem szerelem1 tulajdonsaga
-    
-        if (currentElement.szerelem2 === undefined){ // ha masodik szerelem nincs akkor egybevonja a ket cellat
+        sor.appendChild(cella3); // cella hozzafuzese a sorhoz
+
+        if (!currentElement.szerelem2) { // ha masodik szerelem nincs akkor egybevonja a ket cellat
             cella3.colSpan = 2; // a ket cell osszevonasa
         } else { // kulon cellaba rakja ha van masodik szerelme
             const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellahoz
@@ -55,29 +90,31 @@ function renderMenu() { // fuggveny bevezetese
         }
     }
 }
+renderMenu(); // kezdeti render
 
-const table = document.createElement('table'); // table elem letrehozasa
-document.body.appendChild(table); // hozzafuzes a bodyhoz
+const form = document.getElementById('form'); // form elem lekerese ami a form idval van definialva
+form.addEventListener('submit', function(e) { // esemenykezeles a formra
+    e.preventDefault(); // alapertelmezett esemeny megakadalyozasa
 
-const fejlec = document.createElement('thead'); // thead letrehozasa a tablazat fejlecehez
-table.appendChild(fejlec); // fejlec hozzafuzese a tablazathoz
+    const koltoNevElem = document.getElementById('kolto_nev'); // kolto_nev input elem lekerese
+    const korszakElem = document.getElementById('korszak'); // korszak input elem lekerese
+    const szerelem1Elem = document.getElementById('szerelem1'); // szerelem1 input elem lekerese
+    const szerelem2Elem = document.getElementById('szerelem2'); // szerelem2 input elem lekerese
+    const masodikElem = document.getElementById('masodik'); // masodik checkbox elem lekerese
 
-const fejlecSor = document.createElement('tr'); // tr elem letrehozasa a fejlec sorahoz
-fejlec.appendChild(fejlecSor); // sor hozzafuzese a fejlechez
+    const koltoNevValue = koltoNevElem.value; // kolto nev ertekenek kiolvasasa
+    const korszakValue = korszakElem.value; // korszak ertekenek kiolvasasa
+    const szerelem1Value = szerelem1Elem.value; // szerelem1 ertekenek kiolvasasa
+    const szerelem2Value = masodikElem.checked ? szerelem2Elem.value : undefined; // szerelem2 ertekenek kiolvasasa ha be van pipalva
 
-const fejlecCella1 = document.createElement('th'); // th elem letrehozasa az elso fejlec cellahoz
-fejlecCella1.innerHTML = array[0].szerzo; // cella tartalma az elso elem szerzo tulajdonsaga
-fejlecSor.appendChild(fejlecCella1); // cella hozzafuzese a fejlec sorhoz
-
-const fejlecCella2 = document.createElement('th'); // th elem letrehozasa a masodik fejlec cellahoz
-fejlecCella2.innerHTML = array[0].korszak; // cella tartalma az elso elem korszak tulajdonsaga
-fejlecSor.appendChild(fejlecCella2); // cella hozzafuzese a fejlec sorhoz
-
-const fejlecCella3 = document.createElement('th'); // th elem letrehozasa a harmadik fejlec cellahoz
-fejlecCella3.innerHTML = array[0].szerelem1; // cella tartalma az elso elem szerelem1 tulajdonsaga
-fejlecSor.appendChild(fejlecCella3); // cella hozzafuzese a fejlec sorhoz
-
-const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
-table.appendChild(torzs); // torzs hozzafuzese a tablazathoz
-
-renderMenu() // fuggveny meghivas
+    const newElement = { // uj elem letrehozasa a tombhoz
+        szerzo: koltoNevValue, // szerzo tulajdonsag beallitasaz
+        korszak: korszakValue, // korszak tulajdonsag beallitasaz
+        szerelem1: szerelem1Value, // szerelem1 tulajdonsag beallitasa
+        szerelem2: szerelem2Value // szerelem2 tulajdonsag beallitas
+    };
+    array.push(newElement); // uj elem hozzaadasa a tombhoz
+    menuContainer.innerHTML = ''; // tablazat tartalmanak torlese 
+    renderMenu(); // tablazat ujrarajzolasa
+    form.reset(); // form resetelese
+});
