@@ -105,6 +105,23 @@ function validateField(inputElem, errorId, errorMessage) { // validacios fuggven
     return valid; // valid valtozo ertekenek visszaadasa
 }
 
+// sikeresen atmasoltam fuggvenybe az osszetett validaciot
+function validateSzerelmek(szerelem1Elem, szerelem2Elem, masodikElem) { // osszetett validacios fuggveny definialasa
+    let valid = true; // lokalis valid valtozo igaz ertekre allitasa
+    
+    // Ha a checkbox be van pipalva es valamelyik szerelem mezo ures
+    if (masodikElem.checked && (szerelem1Elem.value === '' || szerelem2Elem.value === '')) { // ellenorzi hogy mindket csapattars allitott e be poziciot
+        const szerelem1Error = document.getElementById('szerelem1-error'); // hibauzenet elem kivalasztasa / ignite vagy tp
+        szerelem1Error.innerHTML = 'Ha bejelölted a checkboxot, akkor'; // hibauzenet beallitasa / ignite lett
+        
+        const szerelem2Error = document.getElementById('szerelem2-error'); // hibauzenet elem kivalasztasa / ignite vagy tp
+        szerelem2Error.innerHTML = 'a költőnek kötelező megadni a szerelmeit!!!'; // hibauzenet beallitasa / ignite lett
+        
+        valid = false; // ha nem valid akkor a valid valtozo falsee
+    }
+    return valid; // valid valtozo ertekenek visszaadasa
+}
+
 form.addEventListener('submit', function(e) { // esemenykezeles a formra
     e.preventDefault(); // alapertelmezett esemeny megakadalyozasa
 
@@ -141,13 +158,8 @@ form.addEventListener('submit', function(e) { // esemenykezeles a formra
         }
     }
 
-    // osszetett validacio, ha checkbox pipa mindket szerelem kell
-    if (masodikElem.checked && (szerelem1Elem.value === '' || szerelem2Elem.value === '')) { // ellenorzi hogy mindket csapattars allitott e be poziciot
-        const szerelem1Error = document.getElementById('szerelem1-error'); // hibauzenet elem kivalasztasa / ignite vagy tp
-        szerelem1Error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // hibauzenet beallitasa / ignite lett
-        const szerelem2Error = document.getElementById('szerelem2-error'); // hibauzenet elem kivalasztasa / ignite vagy tp
-        szerelem2Error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // hibauzenet beallitasa / ignite lett
-        
+    // osszetett validacio hivas
+    if (!validateSzerelmek(szerelem1Elem, szerelem2Elem, masodikElem)) { // osszetett validacios fuggveny meghivasa
         valid = false; // ha nem valid akkor a valid valtozo false
     }
     
