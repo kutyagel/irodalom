@@ -32,30 +32,38 @@ const array = [ // tomb letrehozasa
 const menuContainer = document.createElement('div'); // div elem letrehozasa ami a tartalmazza a tablazatot
 document.body.appendChild(menuContainer); // hozzafuzes a bodyhoz
 
-function renderMenu() { // renderMenu fuggveny definialasa
-    const table = document.createElement('table'); // table elem letrehozasa
-    menuContainer.appendChild(table); // hozzafuzes a menuContainer-hez
-    
-    // fejlec letrehozasa
+function renderTableHeader(table) {
     const fejlec = document.createElement('thead'); // thead letrehozasa a tablazat fejlecehez
     table.appendChild(fejlec); // fejlec hozzafuzese a tablazathoz
     
     const fejlecSor = document.createElement('tr'); // tr elem letrehozasa a fejlec sorahoz
     fejlec.appendChild(fejlecSor); // sor hozzafuzese a fejlechez
     
-    const fejlecCella1 = document.createElement('th'); // th elem letrehozasa az elso fejlec cellahoz
-    fejlecCella1.innerHTML = array[0].szerzo; // cella tartalma az elso elem szerzo tulajdonsaga
-    fejlecSor.appendChild(fejlecCella1); // cella hozzafuzese a fejlec sorhoz
+    // Ciklus a fejlec oszlopainak generalasahoz
+    const fejlecOszlopok = [ // fejlec oszlopok definialasa
+        { nev: 'szerzo', szoveg: array[0].szerzo, oszlopSpan: 1 }, // elso oszlop definialasa
+        { nev: 'korszak', szoveg: array[0].korszak || "Korszak", oszlopSpan: 1 }, // masodik oszlop definialasa
+        { nev: 'szerelem1', szoveg: array[0].szerelem1, oszlopSpan: 2 } // harmadik oszlop definialasa
+    ];
     
-    const fejlecCella2 = document.createElement('th'); // th elem letrehozasa a masodik fejlec cellahoz
-    fejlecCella2.innerHTML = array[0].korszak || "Korszak"; // cella tartalma az elso elem korszak tulajdonsaga
-    fejlecSor.appendChild(fejlecCella2); // cella hozzafuzese a fejlec sorhoz
+    for (const oszlop of fejlecOszlopok) { // vegigiteralas az oszlopokon
+        const fejlecCella = document.createElement('th'); // th elem letrehozasa a fejlec cellahoz
+        fejlecCella.innerHTML = oszlop.szoveg; // cella tartalmanak beallitasa
+        
+        if (oszlop.oszlopSpan > 1) { // ha az oszlop tobb cellat foglal el
+            fejlecCella.colSpan = oszlop.oszlopSpan; // beallitjuk a colSpan erteket
+        }
+        
+        fejlecSor.appendChild(fejlecCella); // cella hozzafuzese a fejlec sorhoz
+    }
+}
+
+function renderMenu() { // renderMenu fuggveny definialasa
+    const table = document.createElement('table'); // table elem letrehozasa
+    menuContainer.appendChild(table); // hozzafuzes a menuContainer-hez
     
-    const fejlecCella3 = document.createElement('th'); // th elem letrehozasa a harmadik fejlec cellahoz
-    fejlecCella3.innerHTML = array[0].szerelem1; // cella tartalma az elso elem szerelem1 tulajdonsaga
-    fejlecCella3.colSpan = '2'; // a ket cell osszevonasa
-    fejlecSor.appendChild(fejlecCella3); // cella hozzafuzese a fejlec sorhoz
-    
+    renderTableHeader(table); // fejlec generalasa
+
     // torzs
     const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
     table.appendChild(torzs); // torzs hozzafuzese a tablazathoz
