@@ -90,6 +90,7 @@ function renderMenu() {
         }
     }
 }
+
 renderMenu(); // kezdeti render
 
 const form = document.getElementById('form'); // form elem lekerese ami a form idval van definialva
