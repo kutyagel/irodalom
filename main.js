@@ -32,18 +32,17 @@ const array = [ // tomb letrehozasa
 const menuContainer = document.createElement('div'); // div elem letrehozasa ami a tartalmazza a tablazatot
 document.body.appendChild(menuContainer); // hozzafuzes a bodyhoz
 
-function renderTableHeader(table) {
+function renderTableHeader(table, adatok) {
     const fejlec = document.createElement('thead'); // thead letrehozasa a tablazat fejlecehez
     table.appendChild(fejlec); // fejlec hozzafuzese a tablazathoz
     
     const fejlecSor = document.createElement('tr'); // tr elem letrehozasa a fejlec sorahoz
     fejlec.appendChild(fejlecSor); // sor hozzafuzese a fejlechez
     
-    // Ciklus a fejlec oszlopainak generalasahoz
     const fejlecOszlopok = [ // fejlec oszlopok definialasa
-        { nev: 'szerzo', szoveg: array[0].szerzo, oszlopSpan: 1 }, // elso oszlop definialasa
-        { nev: 'korszak', szoveg: array[0].korszak || "Korszak", oszlopSpan: 1 }, // masodik oszlop definialasa
-        { nev: 'szerelem1', szoveg: array[0].szerelem1, oszlopSpan: 2 } // harmadik oszlop definialasa
+        { nev: 'szerzo', szoveg: adatok[0].szerzo, oszlopSpan: 1 }, // elso oszlop definialasa
+        { nev: 'korszak', szoveg: adatok[0].korszak || "Korszak", oszlopSpan: 1 }, // masodik oszlop definialasa
+        { nev: 'szerelem1', szoveg: adatok[0].szerelem1, oszlopSpan: 2 } // harmadik oszlop definialasa
     ];
     
     for (const oszlop of fejlecOszlopok) { // vegigiteralas az oszlopokon
@@ -58,19 +57,19 @@ function renderTableHeader(table) {
     }
 }
 
-function renderMenu() { // renderMenu fuggveny definialasa
+function renderMenu(adatok) { // renderMenu fuggveny definialasa
     const table = document.createElement('table'); // table elem letrehozasa
     menuContainer.appendChild(table); // hozzafuzes a menuContainer-hez
     
-    renderTableHeader(table); // fejlec generalasa
+    renderTableHeader(table, adatok); // fejlec generalasa
 
     // torzs
     const torzs = document.createElement('tbody'); // tbody elem letrehozasa a tablazat torzsehez
     table.appendChild(torzs); // torzs hozzafuzese a tablazathoz
 
     // sorok
-    for (let i = 1; i < array.length; i++) { // vegigiteralok az arrayen, az elso elemet kihagyva
-        const currentElement = array[i]; // az aktualis elem elmentese
+    for (let i = 1; i < adatok.length; i++) { // vegigiteralok az arrayen, az elso elemet kihagyva
+        const currentElement = adatok[i]; // az aktualis elem elmentese
 
         const sor = document.createElement('tr'); // tr elem letrehozasa az uj sorhoz
         torzs.appendChild(sor); // sor hozzafuzese a torzshoz
@@ -97,7 +96,7 @@ function renderMenu() { // renderMenu fuggveny definialasa
     }
 }
 
-renderMenu(); // kezdeti render
+renderMenu(array); // kezdeti render atadva az arrayt
 
 const form = document.getElementById('form'); // form elem lekerese ami a form idval van definialva
 
@@ -187,7 +186,7 @@ form.addEventListener('submit', function(e) { // esemenykezeles a formra
 
         array.push(newElem); // uj elem hozzaadasa a tombhoz
         menuContainer.innerHTML = ''; // tablazat tartalmanak torlese 
-        renderMenu(); // tablazat ujrarajzolasa
+        renderMenu(array); // tablazat ujrarajzolasa
         thisForm.reset(); // form reset
     }
 });
