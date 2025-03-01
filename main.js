@@ -140,6 +140,16 @@ form.addEventListener('submit', function(e) { // esemenykezeles a formra
             valid = false; // ha nem valid akkor a valid valtozo false
         }
     }
+
+    // osszetett validacio, ha checkbox pipa mindket szerelem kell
+    if (masodikElem.checked && (szerelem1Elem.value === '' || szerelem2Elem.value === '')) { // ellenorzi hogy mindket csapattars allitott e be poziciot
+        const szerelem1Error = document.getElementById('szerelem1-error'); // hibauzenet elem kivalasztasa / ignite vagy tp
+        szerelem1Error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // hibauzenet beallitasa / ignite lett
+        const szerelem2Error = document.getElementById('szerelem2-error'); // hibauzenet elem kivalasztasa / ignite vagy tp
+        szerelem2Error.innerHTML = 'A költőnek kötelező megadni a szerelmeit'; // hibauzenet beallitasa / ignite lett
+        
+        valid = false; // ha nem valid akkor a valid valtozo false
+    }
     
     if (valid) { // ha minden mezo helyesen van kitoltve
 
