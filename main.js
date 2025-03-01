@@ -29,8 +29,127 @@ const array = [ // tomb letrehozasa
     }
 ];
 
+
 const menuContainer = document.createElement('div'); // div elem letrehozasa ami a tartalmazza a tablazatot
 document.body.appendChild(menuContainer); // hozzafuzes a bodyhoz
+
+function createForm() { // form letrehozasa fuggveny def
+    const form = document.createElement('form'); // form elem letrehozasa
+    form.id = 'form'; // form id
+    form.action = '#'; // form action
+    
+    // kolto
+    const koltoLabel = document.createElement('label'); // label elem
+    koltoLabel.setAttribute('for', 'kolto_nev'); // for attributum 
+    koltoLabel.textContent = 'Költő neve:'; // cimke szoveg 
+    form.appendChild(koltoLabel); // label hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    const koltoInput = document.createElement('input'); // input elem
+    koltoInput.type = 'text'; // input tipus
+    koltoInput.id = 'kolto_nev'; // input id
+    koltoInput.name = 'kolto_nev'; // input name
+    form.appendChild(koltoInput); // input hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    form.appendChild(document.createElement('br')); // masodik sortores
+    
+    const koltoError = document.createElement('div'); // div elem a hibauzenethez
+    koltoError.id = 'kolto_nev-error'; // id
+    koltoError.className = 'error'; // osztaly
+    form.appendChild(koltoError); // error div a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    // korszak
+    const korszakLabel = document.createElement('label'); // label elem
+    korszakLabel.setAttribute('for', 'korszak'); // for beallitasa
+    korszakLabel.textContent = 'Korszak:'; // cimke szoveg
+    form.appendChild(korszakLabel); // label hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    const korszakInput = document.createElement('input'); // input elem
+    korszakInput.type = 'text'; // input tipus
+    korszakInput.id = 'korszak'; // input id
+    korszakInput.name = 'korszak'; // input name
+    form.appendChild(korszakInput); // input hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    form.appendChild(document.createElement('br')); // masodik sortores
+    
+    const korszakError = document.createElement('div'); // div a hibauzenethez
+    korszakError.id = 'korszak-error'; // id
+    korszakError.className = 'error'; // osztaly
+    form.appendChild(korszakError); // error div a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    // szerelem1
+    const szerelem1Label = document.createElement('label'); // label elem
+    szerelem1Label.setAttribute('for', 'szerelem1'); // for attributum
+    szerelem1Label.textContent = 'Szerelme:'; // cimke szoveg
+    form.appendChild(szerelem1Label); // label hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    const szerelem1Input = document.createElement('input'); // input elem
+    szerelem1Input.type = 'text'; // input tipus
+    szerelem1Input.id = 'szerelem1'; // input id
+    szerelem1Input.name = 'szerelem1'; // input name
+    form.appendChild(szerelem1Input); // input hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    form.appendChild(document.createElement('br')); // masodik sortores
+    
+    const szerelem1Error = document.createElement('div'); // div elem a hibauzenethez
+    szerelem1Error.id = 'szerelem1-error'; // id
+    szerelem1Error.className = 'error'; // osztaly
+    form.appendChild(szerelem1Error); // error div a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    // checkbox
+    const masodikLabel = document.createElement('label'); // label elem
+    masodikLabel.setAttribute('for', 'masodik'); // for beallitasa
+    masodikLabel.textContent = 'Volt másik szerelme?'; // cimke szoveg
+    form.appendChild(masodikLabel); // label hozzaadasa a formhoz
+    
+    const masodikInput = document.createElement('input'); // checkbox elem
+    masodikInput.type = 'checkbox'; // checkbox tipus
+    masodikInput.id = 'masodik'; // checkbox id
+    masodikInput.name = 'masodik'; // checkbox name
+    form.appendChild(masodikInput); // checkbox hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    form.appendChild(document.createElement('br')); // masodik sortores
+    
+    // szerlme2
+    const szerelem2Label = document.createElement('label'); // label elem
+    szerelem2Label.setAttribute('for', 'szerelem2'); // for beallitasa
+    szerelem2Label.textContent = 'Szerelme:'; // cimke szoveg
+    form.appendChild(szerelem2Label); // label hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    const szerelem2Input = document.createElement('input'); // input elem
+    szerelem2Input.type = 'text'; // input tipus
+    szerelem2Input.id = 'szerelem2'; // input id
+    szerelem2Input.name = 'szerelem2'; // input name
+    form.appendChild(szerelem2Input); // input hozzaadasa a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    form.appendChild(document.createElement('br')); // masodik sortores
+    
+    const szerelem2Error = document.createElement('div'); // div a hibauzenethez
+    szerelem2Error.id = 'szerelem2-error'; // id
+    szerelem2Error.className = 'error'; // osztaly
+    form.appendChild(szerelem2Error); // error div a formhoz
+    form.appendChild(document.createElement('br')); // sortores
+    
+    // submit
+    const submitBtn = document.createElement('button'); // gomb elem
+    submitBtn.textContent = 'Hozzáadás'; // gomb szovege
+    form.appendChild(submitBtn); // gomb hozzaadasa a formhoz
+    
+    return form; // form visszaadasa
+}
+
+function addFormToDOM() { // form domhoz adas
+    const newForm = createForm(); // uj form
+    document.body.insertBefore(newForm, menuContainer); // form beszurasa a menucontainer ele
+    
+    return newForm; // form visszaadasa
+}
 
 function renderTableHeader(table, adatok) {
     const fejlec = document.createElement('thead'); // thead letrehozasa a tablazat fejlecehez
@@ -98,7 +217,7 @@ function renderMenu(adatok) { // renderMenu fuggveny definialasa
 
 renderMenu(array); // kezdeti render atadva az arrayt
 
-const form = document.getElementById('form'); // form elem lekerese ami a form idval van definialva
+const form = addFormToDOM(); // form hozzaadasa a domhoz
 
 function validateField(inputElem, errorId, errorMessage) { // validacios fuggveny definialasa
     let valid = true; // lokalis valid valtozo igaz ertekre allitasa
