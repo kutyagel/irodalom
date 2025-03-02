@@ -67,9 +67,9 @@ form.addEventListener('submit', function(e) { // esemenykezeles a formra
         valid = false; // ha nem valid akkor a valid valtozo false
     }
     
-    if (!validateField(szerelem1Elem, 'szerelem1-error', 'Az első szerelem megadása kötelező')) { // szerelem1 validalasa
-        valid = false; // ha nem valid akkor a valid valtozo false
-    }
+    //if (!validateField(szerelem1Elem, 'szerelem1-error', 'Az első szerelem megadása kötelező')) { // szerelem1 validalasa
+        //valid = false; // ha nem valid akkor a valid valtozo false
+    //}
 
     if (masodikElem.checked) { // ha a masodik szerelem checkbox be van pipalva
         if (!validateField(szerelem2Elem, 'szerelem2-error', 'A második szerelem megadása kötelező, ha be van jelölve')) { // szerelem2 validalasa

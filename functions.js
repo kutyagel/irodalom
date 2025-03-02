@@ -11,7 +11,7 @@ function generateForm() { // form letrehozasa fuggveny def
     
     // kolto
     const koltoLabel = document.createElement('label'); // label elem
-    koltoLabel.setAttribute('for', 'kolto_nev'); // for attributum 
+    koltoLabel.htmlFor = 'kolto_nev'; // for attributum 
     koltoLabel.textContent = 'Költő neve:'; // cimke szoveg 
     form.appendChild(koltoLabel); // label hozzaadasa a formhoz
     form.appendChild(document.createElement('br')); // sortores
@@ -32,7 +32,7 @@ function generateForm() { // form letrehozasa fuggveny def
     
     // korszak
     const korszakLabel = document.createElement('label'); // label elem
-    korszakLabel.setAttribute('for', 'korszak'); // for beallitasa
+    korszakLabel.htmlFor = 'korszak'; // for beallitasa
     korszakLabel.textContent = 'Korszak:'; // cimke szoveg
     form.appendChild(korszakLabel); // label hozzaadasa a formhoz
     form.appendChild(document.createElement('br')); // sortores
@@ -53,7 +53,7 @@ function generateForm() { // form letrehozasa fuggveny def
     
     // szerelem1
     const szerelem1Label = document.createElement('label'); // label elem
-    szerelem1Label.setAttribute('for', 'szerelem1'); // for attributum
+    szerelem1Label.htmlFor = 'szerelem1'; // for attributum
     szerelem1Label.textContent = 'Szerelme:'; // cimke szoveg
     form.appendChild(szerelem1Label); // label hozzaadasa a formhoz
     form.appendChild(document.createElement('br')); // sortores
@@ -74,7 +74,7 @@ function generateForm() { // form letrehozasa fuggveny def
     
     // checkbox
     const masodikLabel = document.createElement('label'); // label elem
-    masodikLabel.setAttribute('for', 'masodik'); // for beallitasa
+    masodikLabel.htmlFor = 'masodik'; // for beallitasa
     masodikLabel.textContent = 'Volt másik szerelme?'; // cimke szoveg
     form.appendChild(masodikLabel); // label hozzaadasa a formhoz
     
@@ -88,7 +88,7 @@ function generateForm() { // form letrehozasa fuggveny def
     
     // szerlme2
     const szerelem2Label = document.createElement('label'); // label elem
-    szerelem2Label.setAttribute('for', 'szerelem2'); // for beallitasa
+    szerelem2Label.htmlFor = 'szerelem2'; // for beallitasa
     szerelem2Label.textContent = 'Szerelme:'; // cimke szoveg
     form.appendChild(szerelem2Label); // label hozzaadasa a formhoz
     form.appendChild(document.createElement('br')); // sortores
@@ -144,7 +144,7 @@ function renderTableHeader(table, adatok) {
     
     const fejlecOszlopok = [ // fejlec oszlopok definialasa
         { nev: 'szerzo', szoveg: adatok[0].szerzo, oszlopSpan: 1 }, // elso oszlop definialasa
-        { nev: 'korszak', szoveg: adatok[0].korszak || "Korszak", oszlopSpan: 1 }, // masodik oszlop definialasa
+        { nev: 'korszak', szoveg: adatok[0].korszak, oszlopSpan: 1 }, // masodik oszlop definialasa
         { nev: 'szerelem1', szoveg: adatok[0].szerelem1, oszlopSpan: 2 } // harmadik oszlop definialasa
     ];
     
@@ -195,9 +195,16 @@ function renderMenu(adatok) { // renderMenu fuggveny definialasa
         cella3.innerHTML = currentElement.szerelem1; // cella tartalma az aktualis elem szerelem1 tulajdonsaga
         sor.appendChild(cella3); // cella hozzafuzese a sorhoz
 
-        if (!currentElement.szerelem2) { // ha masodik szerelem nincs akkor egybevonja a ket cellat
-            cella3.colSpan = 2; // a ket cell osszevonasa
-        } else { // kulon cellaba rakja ha van masodik szerelme
+        if (currentElement.szerelem1 === "") {
+            cella3.innerHTML = "-";
+            cella3.colSpan = 2;
+        } else {
+            cella3.innerHTML = currentElement.szerelem1;
+        }
+        if (!currentElement.szerelem2 || currentElement.szerelem2 === "") {
+            cella3.colSpan = 2; // a ket cella osszevonasa
+        } else {
+            // Van második szerelem is, külön cellába tesszük
             const cella4 = document.createElement('td'); // td elem letrehozasa a negyedik cellahoz
             cella4.innerHTML = currentElement.szerelem2; // cella tartalma az aktualis elem szerelem2 tulajdonsaga
             sor.appendChild(cella4); // cella hozzafuzese a sorhoz
